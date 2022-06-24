@@ -1,0 +1,1 @@
+django-comments-ink==0.2.0
