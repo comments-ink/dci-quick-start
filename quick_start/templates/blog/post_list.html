@@ -1,45 +1,40 @@
 {% extends "base.html" %}
 
+{% load i18n %}
 {% load static %}
-{% load comments %}
 
-{% block extra_css %}
-<link rel="stylesheet" type="text/css" href="{% static 'django_comments_ink/css/comments.css' %}">
-{% endblock %}
+{% block nav-blog-class %}active{% endblock %}
 
 {% block content %}
-<h1 class="pb-3 text-center">Blog</h1>
-
-<div class="row justify-content-center flex-fill">
-  <div class="col-md-10">
+<main>
+  <article class="container">
+    <h2 class="text-center">Blog</h2>
     {% for object in object_list %}
-      {% get_comment_count for object as comment_count %}
-      <h3><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h3>
-      <p class="date">
-        Published {{ object.publish }}
-        {% if comment_count %}
-          &nbsp;
-          <span class="emoji">&#128172;</span>
-          <span class="small">{{ comment_count }}</span>
-          &nbsp;
-        {% endif %}
-      </p>
-      {{ object.body|truncatewords:30|linebreaks }}
+      <div>
+        <h6 class="inline flex flex-align-center">
+          <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>&nbsp;-&nbsp;<span class="small">{{ object.publish|date:"d-F-Y" }}</span>
+        </h6>
+        {{ object.body|truncatewords:30|linebreaks }}
+      </div>
     {% endfor %}
-  </div>
-</div>
 
-<ul class="mt-5 pagination justify-content-center">
-  <li class="page-item{% if not page_obj.has_previous %} disabled{% endif %}">
-    <a class="page-link" href="{{ url }}?page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}">previous</a>
-  </li>
-  {% for page_number in page_range %}
-  <li class="page-item{% if page_number == page_obj.number %} active{% endif %}">
-    <a class="page-link" href="{{ url }}?page={{ page_number }}">{{ page_number }}</a>
-  </li>
-  {% endfor %}
-  <li class="page-item{% if not page_obj.has_next %} disabled{% endif %}">
-    <a class="page-link" href="{{ url }}?page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}">next</a>
-  </li>
-</ul>
+    {% if page_obj.paginator.count > 1 %}
+      <div class="inline-centered pagination">
+        <span class="step-links">
+          {% if page_obj.has_previous %}
+            <a href="?page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}">Previous</a>
+          {% else %}
+            <span>{% trans "First" %}<span>
+          {% endif %}
+          &nbsp;-&nbsp;
+          {% if page_obj.has_next %}
+            <a href="?page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}">Next</a>
+          {% else %}
+            <span>{% trans "Last" %}<span>
+          {% endif %}
+        </span>
+      </div>
+    {% endif %}
+  </article>
+</main>
 {% endblock %}

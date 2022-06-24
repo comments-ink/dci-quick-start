@@ -47,7 +47,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -66,7 +65,6 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -155,67 +153,6 @@ LOGOUT_URL = "/user/logout/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-COMMENTS_APP = "django_comments_ink"
-
-COMMENTS_HIDE_REMOVED = False
-
-COMMENTS_INK_SALT = os.getenv("COMMENTS_INK_SALT", "")
-COMMENTS_INK_CONFIRM_EMAIL = True  # Set to False to disable confirmation.
-COMMENTS_INK_FROM_EMAIL = "staff@example.com"
-COMMENTS_INK_CONTACT_EMAIL = "staff@example.com"
-
-# Default to True, use False to allow other
-# backend (say Celery based) send your emails.
-COMMENTS_INK_THREADED_EMAILS = False
-
-COMMENTS_INK_API_USER_REPR = lambda user: user.name
-
-COMMENTS_INK_SEND_HTML_EMAIL = True
-
-# This setting is to apply a maximum thread level of 1 to all apps by default.
-COMMENTS_INK_MAX_THREAD_LEVEL = 1
-
-# This setting applies a maximum thread level of 1 only to the 'blog.post'
-# app model. Useful in case you want to allow different levels of comment
-# nesting to different app models.
-COMMENTS_INK_MAX_THREAD_LEVEL_BY_APP_MODEL = {
-    "blog.post": 1  # So 2 levels: from 0 to 1.
-}
-
-COMMENTS_INK_APP_MODEL_OPTIONS = {
-    "default": {
-        "who_can_post": "all",  # Valid values: "users", "all".
-        "comment_flagging_enabled": True,
-        "comment_reactions_enabled": True,
-        "object_reactions_enabled": True,
-    },
-    "blog.post": {
-        "check_input_allowed": "blog.models.check_comments_input_allowed"
-    },
-}
-
-COMMENTS_INK_CACHE_NAME = "default"
-
-# All HTML elements rendered by django-comments-ink use the 'dci' CSS selector,
-# defined in 'django_comments_ink/static/django_comments_ink/css/comments.css'.
-# You can alter the CSS rules applied to your comments adding your own custom
-# selector to the following setting.
-COMMENTS_INK_CSS_CUSTOM_SELECTOR = "dci dci-custom"
-
-# How many users are listed when hovering a reaction.
-COMMENTS_INK_MAX_USERS_IN_TOOLTIP = 10
-
-# Display up to the given number of comments in the last page to avoid
-# creating another page containing only these amount of comments.
-COMMENTS_INK_MAX_LAST_PAGE_ORPHANS = 4
-
-# Number of comments per page. When <=0 pagination is disabled.
-COMMENTS_INK_ITEMS_PER_PAGE = 10
-
-COMMENTS_INK_THEME_DIR = "feedback_in_header"
-
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
 
 LOGGING = {
     "version": 1,
@@ -261,11 +198,6 @@ LOGGING = {
         "django.security": {
             "handlers": ["console", "mail_admins"],
             "level": "ERROR",
-            "propagate": True,
-        },
-        "django_comments_ink": {
-            "handlers": ["console", "mail_admins"],
-            "level": "INFO",
             "propagate": True,
         },
     },

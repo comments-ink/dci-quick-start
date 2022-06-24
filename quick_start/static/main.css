@@ -52,6 +52,10 @@ header .container, footer .container {
     flex-direction: row
 }
 
+main .container {
+    display: block;
+}
+
 @media screen and (min-width: 840px) {
     .container {
         width: 732px;
@@ -699,6 +703,7 @@ UL LI {
 .pb32 { padding-bottom: 32px }
 .py06 { padding: .6rem 0 }
 .px1 { padding: 0 1rem }
+.py1 { padding: 1rem 0 }
 .bt1 { border-top: 1px solid rgba(0, 0, 0, .1) }
 
 .bgc-alice { background-color: aliceblue }
