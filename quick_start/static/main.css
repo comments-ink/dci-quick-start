@@ -38,6 +38,9 @@ body {
     font-family: "Oxygen", sans-serif;
 }
 
+P {
+    line-height: 1.6rem;
+}
 /* ----------------------------------------- */
 
 .container {
