@@ -6,15 +6,13 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
-from django.db.models import Q
-from django.http.response import HttpResponseRedirect, JsonResponse
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import gettext as _
-from django.views.decorators.http import require_POST
 from django.views.defaults import bad_request
-from django_comments_ink import get_model, signed
 
+from . import signed
 from . import forget_me, remember_me
 from .decorators import not_authenticated
 from .forms import (
@@ -117,9 +115,7 @@ def user_logout(request):
 
 @login_required
 def user_account(request):
-    or_condition = Q(user=request.user) | Q(user_email=request.user.email)
-    comments = get_model().objects.filter(or_condition).order_by("submit_date")
-    return render(request, "users/account.html", {"comments": comments})
+    return render(request, "users/account.html", {})
 
 
 @login_required
