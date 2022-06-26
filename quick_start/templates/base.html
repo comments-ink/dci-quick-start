@@ -36,8 +36,7 @@
       </div>
     </header>
 
-    {% block content %}
-    {% endblock %}
+    {% block content %}{% endblock %}
 
     <footer>
       <div class="container">
@@ -53,5 +52,8 @@
         <p>django-comments-ink</p>
       </div>
     </footer>
+
+    {% block extra_html %}{% endblock %}
+    {% block extra_js %}{% endblock %}
   </body>
 </html>
